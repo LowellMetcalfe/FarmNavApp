@@ -1,7 +1,9 @@
 package com.metcalfe.lowell.farmtester;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,9 @@ public class ConvertActivity extends AppCompatActivity {
         btn = findViewById(R.id.button);
         LatLongList = new ArrayList<Double[]>();
         EastNorthList = new ArrayList<int[]>();
+        Intent currentIntent = getIntent();
+        String tester = currentIntent.getStringExtra("Test");
+        Log.d("a",tester);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,9 +58,14 @@ public class ConvertActivity extends AppCompatActivity {
         // TODO: 21/01/2019  implement grab gps data call instead of user input
         Convert(Double.parseDouble(edt1.getText().toString()),Double.parseDouble(edt2.getText().toString()));
     }
-    public void FinishClicked(){
+    public void FinishClicked(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        //toArray creates an object
+        intent.putExtra("LatLongs",LatLongList.toArray());
+        // FIXME: 24/01/2019 needs a parcable here, google how to recieve objects with put extra
+        Object[] LatlongArray = LatLongList.toArray();
 
-
+        startActivity(intent);
     }
     public void Convert(double latitude, double longitude) {
         Double[] LatLong = new Double[]{latitude,longitude};
