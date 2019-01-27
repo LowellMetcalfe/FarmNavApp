@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="1dp"
+        android:hint="Latitude"
         app:layout_constraintBottom_toTopOf="@+id/edt2"
         app:layout_constraintEnd_toEndOf="@+id/edt2"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +24,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Longitude"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt1" />
 
@@ -42,6 +45,7 @@
         android:id="@+id/txt3"
         android:layout_width="370dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="94dp"
         android:ems="10"
         android:inputType="textMultiLine"
@@ -49,23 +53,18 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnFinish"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
         android:layout_marginEnd="16dp"
         android:onClick="FinishClicked"
         android:text="Finish"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/edt2" />
 
 </android.support.constraint.ConstraintLayout>
