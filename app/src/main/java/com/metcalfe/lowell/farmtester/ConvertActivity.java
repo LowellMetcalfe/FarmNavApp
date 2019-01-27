@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,22 @@ public class ConvertActivity extends AppCompatActivity {
     }
     public void btn1Clicked(){
         // TODO: 21/01/2019  implement grab gps data call instead of user input
-        Convert(Double.parseDouble(edt1.getText().toString()),Double.parseDouble(edt2.getText().toString()));
+        // FIXME: 27/01/2019 regex validation for lat long values https://stackoverflow.com/questions/7780981/how-to-validate-latitude-and-longitude
+        if(edt1.getText().toString().equals("")) {
+            //validation for latitude
+            Toast.makeText(this, "Please enter a correct latitude value.", Toast.LENGTH_SHORT).show();
+            edt1.requestFocus();
+            edt1.setSelectAllOnFocus(true);
+            edt1.setHighlightColor(2);
+        }else if(edt2.getText().toString().equals("")) {
+            //validation for longitude
+            edt2.requestFocus();
+            edt2.setSelectAllOnFocus(true);
+            edt2.setHighlightColor(2);
+            Toast.makeText(this, "Please enter a correct longitude value.", Toast.LENGTH_SHORT).show();
+        }else{
+            Convert(Double.parseDouble(edt1.getText().toString()), Double.parseDouble(edt2.getText().toString()));
+        }
     }
     public void FinishClicked(View view){
         Intent intent = new Intent(this, MainActivity.class);
