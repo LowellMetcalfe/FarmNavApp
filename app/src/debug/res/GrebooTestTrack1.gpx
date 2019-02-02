@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpsies="https://www.gpsies.com/GPX/1/0" creator="GPSies https://www.gpsies.com - Greboo: test track 1" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd https://www.gpsies.com/GPX/1/0 https://www.gpsies.com/gpsies.xsd">
+  <metadata>
+    <name>Greboo: test track 1</name>
+    <author>
+      <name>greboo</name>
+      <link href="https://www.gpsies.com/mapUser.do?username=greboo">
+        <text>greboo on GPSies.com</text>
+        <type>GPSiesUserOnWeb</type>
+      </link>
+    </author>
+    <link href="https://www.gpsies.com/map.do?fileId=swpzpsvtiwlqlsnk">
+      <text>Greboo: test track 1 on GPSies.com</text>
+      <type>trackOnWeb</type>
+    </link>
+    <time>2018-08-23T14:17:35Z</time>
+    <extensions>
+      <gpsies:property>round trip</gpsies:property>
+      <gpsies:trackLengthMeter>1888.1044185801202</gpsies:trackLengthMeter>
+      <gpsies:totalAscentMeter>33.0</gpsies:totalAscentMeter>
+      <gpsies:totalDescentMeter>33.0</gpsies:totalDescentMeter>
+      <gpsies:minHeightMeter>80.0</gpsies:minHeightMeter>
+      <gpsies:maxHeightMeter>113.0</gpsies:maxHeightMeter>
+    </extensions>
+  </metadata>
+  <trk>
+    <name>Greboo: test track 1 on GPSies.com</name>
+    <link href="https://www.gpsies.com/map.do?fileId=swpzpsvtiwlqlsnk">
+      <type>trackOnWeb</type>
+    </link>
+    <link href="https://www.gpsies.com/charts/sw/map/swpzpsvtiwlqlsnk_map.png">
+      <type>elevationChartUrlMap</type>
+    </link>
+    <link href="https://www.gpsies.com/charts/sw/mapThumb/swpzpsvtiwlqlsnk_mapThumb.png">
+      <type>elevationChartUrlMapThumb</type>
+    </link>
+    <link href="https://www.gpsies.com/charts/sw/tab/swpzpsvtiwlqlsnk_tab.png">
+      <type>elevationChartUrlTab</type>
+    </link>
+    <trkseg>
+      <trkpt lat="51.91922550" lon="-0.25225102">
+        <ele>80.000000</ele>
+        <time>2010-01-01T00:00:00Z</time>
+      </trkpt>
+      <trkpt lat="51.91954980" lon="-0.24941861">
+        <ele>87.000000</ele>
+        <time>2010-01-01T00:00:05Z</time>
+      </trkpt>
+      <trkpt lat="51.91589700" lon="-0.24806141">
+        <ele>102.00000</ele>
+        <time>2010-01-01T00:00:10Z</time>
+      </trkpt>
+      <trkpt lat="51.91501020" lon="-0.24718165">
+        <ele>106.00000</ele>
+        <time>2010-01-01T00:00:15Z</time>
+      </trkpt>
+      <trkpt lat="51.91458660" lon="-0.24726748">
+        <ele>112.00000</ele>
+        <time>2010-01-01T00:00:20Z</time>
+      </trkpt>
+      <trkpt lat="51.91376600" lon="-0.24956345">
+        <ele>113.00000</ele>
+        <time>2010-01-01T00:00:30Z</time>
+      </trkpt>
+      <trkpt lat="51.91630720" lon="-0.25239586">
+        <ele>105.00000</ele>
+        <time>2010-01-01T00:00:35Z</time>
+      </trkpt>
+      <trkpt lat="51.91605580" lon="-0.25396227">
+        <ele>102.00000</ele>
+        <time>2010-01-01T00:00:40Z</time>
+      </trkpt>
+      <trkpt lat="51.91788220" lon="-0.25428414">
+        <ele>89.000000</ele>
+        <time>2010-01-01T00:00:50Z</time>
+      </trkpt>
+      <trkpt lat="51.91831900" lon="-0.25181651">
+        <ele>84.000000</ele>
+        <time>2010-01-01T00:00:55Z</time>
+      </trkpt>
+      <trkpt lat="51.91912630" lon="-0.25224566">
+        <ele>80.000000</ele>
+        <time>2010-01-01T00:01:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
+
