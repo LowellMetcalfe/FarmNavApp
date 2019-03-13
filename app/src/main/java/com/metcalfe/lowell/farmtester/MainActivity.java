@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public List<Integer> eastingList;
     public List<Integer> northingList;
     public CoordinateConversion CC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         longList = new ArrayList<>();
         eastingList = new ArrayList<>();
         northingList = new ArrayList<>();
+
         /*
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,14 +61,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         */
         //StartConvert();
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        this.mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        LatLng field1 = new LatLng(51.91922550,-0.25225102);
-         //mMap.addMarker(new MarkerOptions().position(field1).title("field1"));
-         //might need to edit zoom level to view whole field
+        getLocation();
+        LatLng field1 = new LatLng(51.91922550, -0.25225102);
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                LatLng clickedPosition = new LatLng(latLng.latitude, latLng.longitude);
+                MarkerOptions options = new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude));
+                mMap.addMarker(options);
+                latList.add(latLng.latitude);
+                longList.add(latLng.longitude);
+            }
+        });
+
+        //mMap.addMarker(new MarkerOptions().position(field1).title("field1"));
+        //might need to edit zoom level to view whole field
      /*   Intent receivedIntent = getIntent();
          if (receivedIntent.getExtras() != null){
              double[] LatLongs = receivedIntent.getDoubleArrayExtra("LatLongs");
@@ -86,14 +99,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //should i be finishing activities when not using them anymore??
         //finish();
     }
-    public void PlotButton(View view){
-        getLocation();
+
+    public void PlotButton(View view) {
+        // TODO: 02/02/2019 logic to check if the position has already been logged, current same as previous
+        mMap.addMarker(new MarkerOptions().position(current));
+        latList.add(current.latitude);
+        longList.add(current.longitude);
     }
+
     public void GoButton(View view) {
         String UTM;
         String[] utm;
         CC = new CoordinateConversion();
-        for (int i = 0; i < latList.size() ; i++) {
+        for (int i = 0; i < latList.size(); i++) {
             UTM = CC.latLon2UTM(latList.get(i), longList.get(i));
             //UTM is split up into two variables so it can be better used
             utm = UTM.split(" ");
@@ -101,7 +119,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             eastingList.add(Integer.parseInt(utm[2]));
             northingList.add(Integer.parseInt(utm[3]));
         }
+        String meme = "";
     }
+
     @SuppressLint("MissingPermission")
     public void getLocation() {
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
@@ -110,16 +130,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 Log.d("Location: ", location.toString());
                 current = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(current));
-                latList.add(current.latitude);
-                longList.add(current.longitude);
+                //plotting the location
             }
+
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
+
             @Override
             public void onProviderEnabled(String provider) {
             }
+
             @Override
             public void onProviderDisabled(String provider) {
             }
@@ -131,17 +152,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
                 // TODO: 01/02/2019 take less readings, calc best value and stop when necessary
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 5, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //checks if both permissions are granted
-        if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                Log.d("","Made it through to ifs");
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.d("", "Made it through to ifs");
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
