@@ -120,12 +120,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void GoButton(View view) {
         ConvertAllLatLongs(latitudeLongitudes);
         PathFinder PF = new PathFinder();
-        PF.FindRoute(UTMs);
+        PF.FindRoute(UTMs,25);
     }
     public static void PlotLine(LatLng[] linePositions) {
         //TODO remove any previous lines
         PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.add(linePositions).add(linePositions[0]).color(Color.RED);
+        polylineOptions.add(linePositions).color(Color.RED);
         Polyline route = mMap.addPolyline(polylineOptions);
     }
 
