@@ -1,4 +1,4 @@
-package com.metcalfe.lowell.farmtester;
+package com.metcalfe.lowell.FarmRouteNav;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -41,7 +41,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public List<Integer> northingList;
     public List<LatLng> latitudeLongitudes = new ArrayList<>();
     public String [] UTMs;
-    //public CoordinateConversion CC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +71,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         this.mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         //TODO: should this happen now? consider location usage
-        //getLocation();
-        LatLng field1 = new LatLng(51.91922550, -0.25225102);
+        LatLng field1 = new LatLng(52.203973, 0.132780);
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(13));
+        //TODO: make the camera focus to the local position on boot
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(field1));
+        getLocation();
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -97,9 +99,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
          }else{
 
          }*/
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
-        //TODO: make the camera focus to the local position on boot
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(field1));
     }
 
     public void StartConvert(View view) {
@@ -170,23 +169,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onProviderDisabled(String provider) {
             }
         };
-        if (Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < 23) {//if its running older software
+            //dont need permission
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //checks if the application has permission to access fine and coarse location
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //if it doesnt have permission, ask for permission
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
-                // TODO: 01/02/2019 take less readings, calc best value and stop when necessary
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //checks if both permissions are granted
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {//if the permission request is positive
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Log.d("", "Made it through to ifs");
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

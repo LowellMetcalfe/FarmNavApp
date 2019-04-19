@@ -1,4 +1,4 @@
-package com.metcalfe.lowell.farmtester;
+package com.metcalfe.lowell.FarmRouteNav;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -118,10 +118,7 @@ public class PathFinder {
                 }
             }
         }
-
-
         BuildLine(Arrays.copyOf(lineRecord.toArray(),lineRecord.size(),String[].class));
-
     }
 
    /* public void FindRoute(String[] UTMs) {
@@ -138,9 +135,12 @@ public class PathFinder {
         double[] LatLongResult;
         //go through each element of the list
         for (int i = 0; i < lineRecord.length; i++) {
+            //convert the UTM to Latitude and Longitude as Doubles
             LatLongResult = CC.utm2LatLon(lineRecord[i]);
+            //turns the two doubles into a LatLng and places it into the array
             linePositions[i] = new LatLng(LatLongResult[0], LatLongResult[1]);
         }
+        //sends the line builder an array of LatLng coordinates.
         MainActivity.PlotLine(linePositions);
     }
 

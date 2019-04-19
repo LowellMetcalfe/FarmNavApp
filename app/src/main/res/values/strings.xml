@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">farmTester</string>
+    <string name="app_name">FarmRouteNav</string>
     <string name="title_activity_maps">Map</string>
     <string name="button_title_maps_go">GO</string>
     <string name="button_title_maps_plot">Plot</string>

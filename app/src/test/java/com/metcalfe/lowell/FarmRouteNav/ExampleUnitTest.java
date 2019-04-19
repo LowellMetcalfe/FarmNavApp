@@ -1,4 +1,4 @@
-package com.metcalfe.lowell.farmtester;
+package com.metcalfe.lowell.FarmRouteNav;
 
 import org.junit.Test;
 

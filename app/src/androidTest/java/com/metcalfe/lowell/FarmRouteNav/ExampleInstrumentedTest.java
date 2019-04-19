@@ -1,4 +1,4 @@
-package com.metcalfe.lowell.farmtester;
+package com.metcalfe.lowell.FarmRouteNav;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -24,3 +24,4 @@ public class ExampleInstrumentedTest {
         assertEquals("com.metcalfe.lowell.farmtester", appContext.getPackageName());
     }
 }
+
