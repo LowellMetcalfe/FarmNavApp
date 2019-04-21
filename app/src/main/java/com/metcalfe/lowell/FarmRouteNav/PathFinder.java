@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PathFinder {
-    //public static List<Integer> eastingList;
-    //public static List<Integer> northingList;
     static int IS_EASTING = 2;
     static int IS_NORTHING = 3;
 
@@ -20,10 +18,7 @@ public class PathFinder {
      * @return STRING: sends back the desiered part of the UTM string, as an string
      */
     private static String GetUTMValue(String utmString, int EastingOrNorthing) {
-//        String valueString = "";
-//        valueString = utmString.split(" ")[EastingOrNorthing];
         String value = (utmString.split(" ")[EastingOrNorthing]);
-        //value = Integer.parseInt(valueString);
         return value;
     }
 
@@ -64,7 +59,12 @@ public class PathFinder {
         return utmString.join(" ", splitUpUtm);
     }
 
-    //TODO put the algorithm here
+
+    /**
+     * performs the route finding logic
+     * @param UTMs              an array of all of the coordinates already in UTM form
+     * @param implementWidth    the size of the vehicle
+     */
     public void FindRoute(String[] UTMs, int implementWidth) {
         int[] Eastings = GetUTMValues(UTMs, IS_EASTING);
         int[] Northings = GetUTMValues(UTMs, IS_NORTHING);
@@ -121,14 +121,10 @@ public class PathFinder {
         BuildLine(Arrays.copyOf(lineRecord.toArray(),lineRecord.size(),String[].class));
     }
 
-   /* public void FindRoute(String[] UTMs) {
-        for (int i = 0; i < UTMs.length; i++) {
-            UTMs[i] = SetNewUTMValue(UTMs[i], GetUTMValue(UTMs[i], IS_EASTING) + 300, IS_EASTING);
-            //SetNewUTMValue(UTMs[i], GetUTMValue(UTMs[i], IS_NORTHING) + 1000, IS_NORTHING);
-        }
-        BuildLine(UTMs);
-    }*/
-
+    /**
+     * converts the line from UTM type to LatLng then calls the display function to print it
+     * @param lineRecord the UTM coordinates for the route
+     */
     public void BuildLine(String[] lineRecord) {
         LatLng[] linePositions = new LatLng[lineRecord.length];
         CoordinateConversion CC = new CoordinateConversion();

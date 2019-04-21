@@ -23,11 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.metcalfe.lowell.FarmRouteNav.ConvertActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.CONVERT" />
-            </intent-filter>
-        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

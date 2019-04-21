@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public List<Integer> eastingList;
     public List<Integer> northingList;
     public List<LatLng> latitudeLongitudes = new ArrayList<>();
-    public String [] UTMs;
+    public String[] UTMs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,73 +54,48 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         longList = new ArrayList<>();
         eastingList = new ArrayList<>();
         northingList = new ArrayList<>();
-        latitudeLongitudes= new ArrayList<>();
-
-        /*
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                StartConvert();
-            }
-        });
-        */
-        //StartConvert();
+        latitudeLongitudes = new ArrayList<>();
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mMap = googleMap;
+        //sets the map to work in hybrid mode
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        //TODO: should this happen now? consider location usage
-        LatLng field1 = new LatLng(52.203973, 0.132780);
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(13));
+        //default display location is a field at the coordinates, used for testing
+        LatLng field1 = new LatLng(51.919198333333334, -0.25225);
+        //sets the zoom level to show the whole field
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         //TODO: make the camera focus to the local position on boot
+        //makes the displayed map centre over the default location
         mMap.moveCamera(CameraUpdateFactory.newLatLng(field1));
         getLocation();
+        //listens for when the user hold clicks on the map
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                LatLng clickedPosition = new LatLng(latLng.latitude, latLng.longitude);
+                //creates a marker at the latLng position parsed from the click listner
                 MarkerOptions options = new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude));
+                //displays the marker
                 mMap.addMarker(options);
-                //latList.add(latLng.latitude);
-                //longList.add(latLng.longitude);
+                //adds the clicked position to the list of vertices
                 latitudeLongitudes.add(latLng);
             }
         });
-
-        //mMap.addMarker(new MarkerOptions().position(field1).title("field1"));
-        //might need to edit zoom level to view whole field
-     /*   Intent receivedIntent = getIntent();
-         if (receivedIntent.getExtras() != null){
-             double[] LatLongs = receivedIntent.getDoubleArrayExtra("LatLongs");
-             for (int i = 0; i < LatLongs.length ; i++) {
-                 //mMap.addMarker(new MarkerOptions().position(LatLongs[i]));
-             }
-         }else{
-
-         }*/
-    }
-
-    public void StartConvert(View view) {
-        //Intent intent = new Intent(this, ConvertActivity.class);
-        //startActivity(intent);
-        //should i be finishing activities when not using them anymore??
-        //finish();
     }
 
     public void PlotButton(View view) {
         // TODO: 02/02/2019 logic to check if the position has already been logged, current same as previous
         mMap.addMarker(new MarkerOptions().position(current));
-        //latList.add(current.latitude);
-        //longList.add(current.longitude);
         latitudeLongitudes.add(current);
     }
 
     public void GoButton(View view) {
         ConvertAllLatLongs(latitudeLongitudes);
         PathFinder PF = new PathFinder();
-        PF.FindRoute(UTMs,25);
+        PF.FindRoute(UTMs, 25);
     }
+
     public static void PlotLine(LatLng[] linePositions) {
         //TODO remove any previous lines
         PolylineOptions polylineOptions = new PolylineOptions();
@@ -128,22 +103,24 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Polyline route = mMap.addPolyline(polylineOptions);
     }
 
-    //Maybe put all of this into the pathFinder class?? it isnt a data collection method
-    public void ConvertAllLatLongs(List<LatLng> latitudeLongitudes){
-        //String UTM;
+    /**
+     * changes the coordinates from a list of points to an array of UTM values
+     * @param latitudeLongitudes the list of vertex coordinates
+     */
+    public void ConvertAllLatLongs(List<LatLng> latitudeLongitudes) {
         //once collected all of the values, turn it into an array
         UTMs = new String[latitudeLongitudes.size()];
         CoordinateConversion CC = new CoordinateConversion();
         for (int i = 0; i < latitudeLongitudes.size(); i++) {
-            UTMs[i] = CC.latLon2UTM(latitudeLongitudes.get(i).latitude,latitudeLongitudes.get(i).longitude);
-            /*UTM = CC.latLon2UTM(latitude.get(i), longitude.get(i));
-            //UTM is split up into two variables so it can be better used
-            utm = UTMs[i].split(" ");
-            String easater = UTMs[i].split("")[2];
-            //UTM response looks like eg: 30 U 689150 5755659. so we collect the last two values.
-            eastingList.add(Integer.parseInt(utm[2]));
-            northingList.add(Integer.parseInt(utm[3]));*/
+            UTMs[i] = CC.latLon2UTM(latitudeLongitudes.get(i).latitude, latitudeLongitudes.get(i).longitude);
         }
+        /*
+        *section was used to test the back and forth conversion of geographical data
+        double [][] Back2LatLng = new double[latitudeLongitudes.size()][];
+        double LatandLong;
+        for (int i = 0; i < latitudeLongitudes.size(); i++) {
+            Back2LatLng[i] = CC.utm2LatLon(UTMs[i]);
+        }*/
     }
 
     @SuppressLint("MissingPermission")
@@ -154,17 +131,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 Log.d("Location: ", location.toString());
                 current = new LatLng(location.getLatitude(), location.getLongitude());
-                //plotting the location
             }
-
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
-
             @Override
             public void onProviderEnabled(String provider) {
             }
-
             @Override
             public void onProviderDisabled(String provider) {
             }
@@ -183,6 +156,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
